@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CONFIG_FILE=config/config.json
+
 #LOCKFILE for generate uuid and keys in first start
 LOCKFILE=config/.lockfile
 if [ ! -f $LOCKFILE ]
@@ -22,20 +24,19 @@ UUID=$(cat config/uuid)
 PRIVATE=$(cat config/private)
 
 #set uuid in config.json
-sed -i 's/"id":.*/"id": "'${UUID}'",/' config/config.json
+sed -i "s/%%UUID%%/${UUID}/" $CONFIG_FILE
 
 #set private key in config.json
-sed -i 's/"privateKey":.*/"privateKey": "'${PRIVATE}'",/' config/config.json
+sed -i "s/%%PRIVATE%%/${PRIVATE}/" $CONFIG_FILE
 
 #create lockfile
 touch $LOCKFILE
 fi
 
-sed -i 's/"dest":.*/"dest": "'${SNI}':443",/' config/config.json
-sed -i '/serverNames/{n;s/.*/\t\t\t\t"'${SNI}'"/}' config/config.json
-sed -i '/shortIds/{n;s/.*/\t\t\t\t"'${SHORT_ID}'"/}' config/config.json
+#set SNI and SHORT_ID (these change on every start)
+sed -i "s|%%SNI%%|${SNI}|g" $CONFIG_FILE
+sed -i "s|%%SHORT_ID%%|${SHORT_ID}|g" $CONFIG_FILE
 
 #run proxy
 echo "XTLS reality starting..."
-/opt/xray/xray run -config /opt/xray/config/config.json 
-
+/opt/xray/xray run -config $CONFIG_FILE

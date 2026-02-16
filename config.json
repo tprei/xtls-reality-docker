@@ -14,7 +14,7 @@
       "settings": {
         "clients": [
           {
-            "id": "",
+            "id": "%%UUID%%",
             "flow": "xtls-rprx-vision"
           }
         ],
@@ -23,21 +23,21 @@
       "streamSettings": {
         "network": "tcp",
         "security": "reality",
-		"realitySettings": {
-			"show": false,
-			"dest": "",
-			"xver": 0,
-			"serverNames": [
-				""
-			],
-			"privateKey": "",
-			"minClientVer": "",
-			"maxClientVer": "",
-			"maxTimeDiff": 0,
-			"shortIds": [
-				"aabbccdd"
-			]
-		}
+        "realitySettings": {
+          "show": false,
+          "dest": "%%SNI%%:443",
+          "xver": 0,
+          "serverNames": [
+            "%%SNI%%"
+          ],
+          "privateKey": "%%PRIVATE%%",
+          "minClientVer": "",
+          "maxClientVer": "",
+          "maxTimeDiff": 0,
+          "shortIds": [
+            "%%SHORT_ID%%"
+          ]
+        }
       },
       "sniffing": {
         "enabled": true,
