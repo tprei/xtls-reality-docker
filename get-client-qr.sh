@@ -1,5 +1,5 @@
 #!/bin/bash
-EXT_IP=$(curl -s ifconfig.me)
+EXT_IP="${FLY_APP_NAME}.fly.dev"
 UUID=$(cat config/uuid)
 PUB_KEY=$(cat config/public)
 
