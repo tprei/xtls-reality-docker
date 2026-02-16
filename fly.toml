@@ -22,7 +22,6 @@ primary_region = "nrt"
 
   [[services.ports]]
     port = 443
-    handlers = ["proxy_proto"]
 
   [services.concurrency]
     type = "connections"
