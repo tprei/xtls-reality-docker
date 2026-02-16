@@ -1,5 +1,5 @@
 # fly.toml configuration for XTLS Reality Docker
-app = "xtls-reality"
+app = "xtls-reality-docker"
 primary_region = "hkg"
 
 [build]
