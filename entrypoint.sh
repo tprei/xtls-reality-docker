@@ -1,27 +1,35 @@
 #!/bin/bash
 
-CONFIG_FILE=config/config.json
+CONFIG_DIR=config
+CONFIG_FILE=$CONFIG_DIR/config.json
+TEMPLATE_FILE=config.template.json
+
+# Copy template to config directory if config doesn't exist (volume mount scenario)
+if [ ! -f $CONFIG_FILE ]; then
+    echo "Copying config template to volume..."
+    cp $TEMPLATE_FILE $CONFIG_FILE
+fi
 
 #LOCKFILE for generate uuid and keys in first start
-LOCKFILE=config/.lockfile
+LOCKFILE=$CONFIG_DIR/.lockfile
 if [ ! -f $LOCKFILE ]
 then
 
 #generate uuid
 echo "Generate UUID..."
-/opt/xray/xray uuid > config/uuid
+/opt/xray/xray uuid > $CONFIG_DIR/uuid
 
 
 #generate Public & Private keys
 echo "Generate public & private keys..."
-/opt/xray/xray x25519 > config/keys
+/opt/xray/xray x25519 > $CONFIG_DIR/keys
 
 #Create files with Public & Private keys
-awk '/Public/{print $3}' config/keys > config/public
-awk '/Private/{print $3}' config/keys > config/private
+awk '/Public/{print $3}' $CONFIG_DIR/keys > $CONFIG_DIR/public
+awk '/Private/{print $3}' $CONFIG_DIR/keys > $CONFIG_DIR/private
 
-UUID=$(cat config/uuid)
-PRIVATE=$(cat config/private)
+UUID=$(cat $CONFIG_DIR/uuid)
+PRIVATE=$(cat $CONFIG_DIR/private)
 
 #set uuid in config.json
 sed -i "s/%%UUID%%/${UUID}/" $CONFIG_FILE
