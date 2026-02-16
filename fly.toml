@@ -22,7 +22,6 @@ primary_region = "nrt"
 
   [[services.ports]]
     port = 443
-    handlers = ["tls"]
 
   [services.concurrency]
     type = "connections"
