@@ -9,7 +9,7 @@ ENV SNI=www.samsung.com
 ENV SHORT_ID=aabbccdd
 
 RUN set -e &&\
-    apk add --no-cache bash libqrencode curl &&\
+    apk add --no-cache bash libqrencode libqrencode-tools curl &&\
     wget https://github.com/XTLS/Xray-core/releases/download/${XRAY_CORE_VERSION}/Xray-linux-64.zip &&\
     mkdir -p /opt/xray/config &&\
     unzip ./Xray-linux-64.zip -d /opt/xray &&\
