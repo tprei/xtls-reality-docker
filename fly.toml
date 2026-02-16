@@ -3,7 +3,7 @@ app = "xtls-reality-docker"
 primary_region = "nrt"
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = "Dockerfile.fly"
 
 [env]
   SNI = "www.samsung.com"
