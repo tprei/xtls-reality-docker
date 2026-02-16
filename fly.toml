@@ -1,0 +1,32 @@
+# fly.toml configuration for XTLS Reality Docker
+app = "xtls-reality"
+primary_region = "hkg"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  SNI = "www.samsung.com"
+  SHORT_ID = "aabbccdd"
+
+[[mounts]]
+  source = "xtls_reality_volume"
+  destination = "/opt/xray/config"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 443
+
+  [[services.ports]]
+    port = 443
+    handlers = ["proxy_proto"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 250
+    soft_limit = 200
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
